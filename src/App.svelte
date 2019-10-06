@@ -1,43 +1,12 @@
-<h1>Hello {name}!</h1>
-{#if user.loggedIn}
-	<button on:click={toggle}>
-		Log out
-	</button>
-{/if}
-
-{#if !user.loggedIn}
-	<button on:click={toggle}>
-		Log in
-	</button>
-{/if}
-<svelte:component this={selected.component}/>
+<section>
+	<a href="/test/321" use:link>test</a>
+	<a href="/" use:link>home</a>
+	<a href="/456789/sgahsga" use:link>404</a>
+</section>
+<Router {routes}/>
 
 <script>
-	import Intro from './Intro.svelte';
-	import Rating from './Rating.svelte';
-	import Intake from './Rating.svelte';
-
-	const options = [
-		{ color: 'intro',   component: Intro   },
-		{ color: 'rating', component: Rating },
-		{ color: 'intake',  component: Intake  },
-	];
-
-	let selected = options[1];	
-
-		let user = { loggedIn: false };
-
-	function toggle() {
-		user.loggedIn = !user.loggedIn;
-	}
-
-	export let name;
-
-	
+	import Router from 'svelte-spa-router'
+	import {routes} from './routes'
+	import {link} from 'svelte-spa-router'
 </script>
-
-<style>
-	h1 {
-		color: purple;
-	}
-</style>
