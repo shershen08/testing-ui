@@ -3,27 +3,38 @@
 	const dispatch = createEventDispatcher();
 	
 	export let data = '';
+	export let isLast = false;
 	
-	let scoops = 1;
-	let flavours = ['Mint choc chip'];
+	let selection = [];
 
-	let menu = [
-		'Cookies and cream',
-		'Mint choc chip',
-		'Raspberry ripple'
-	];
+	// let menu = [
+	// 	'Cookies and cream',
+	// 	'Mint choc chip',
+	// 	'Raspberry ripple'
+	// ];
 
-	function join(flavours) {
-		if (flavours.length === 1) return flavours[0];
-		return `${flavours.slice(0, -1).join(', ')} and ${flavours[flavours.length - 1]}`;
-	}
-	const nextQuestion = () => dispatch('submit', {scoops, flavours});
+	// function join(flavours) {
+	// 	if (flavours.length === 1) return flavours[0];
+	// 	return `${flavours.slice(0, -1).join(', ')} and ${flavours[flavours.length - 1]}`;
+	// }
+	const nextQuestion = () => dispatch('submit', {selection});
 </script>
 
-<h2>Size</h2>
+<h2>{data.title}</h2>
 
-{JSON.stringify(data)}
+{#if data.img != null}
+	<img src={data.img} alt="{data.title}" class="main-img"/>
+{/if}
 
+{#each data.answers as item}
+	<label>
+		<input type=checkbox bind:group={selection} value={item}>
+		{item.text}
+	</label>
+{/each}
+
+<!-- {JSON.stringify(data)} -->
+<!-- 
 <label>
 	<input type=radio bind:group={scoops} value={1}>
 	One scoop
@@ -57,7 +68,19 @@
 		You ordered {scoops} {scoops === 1 ? 'scoop' : 'scoops'}
 		of {join(flavours)}
 	</p>
+{/if} -->
+{#if isLast}
+	<button on:click={nextQuestion}>
+		Finish
+	</button>
+{:else}
+	<button on:click={nextQuestion}>
+		Next
+	</button>
 {/if}
-<button on:click={nextQuestion}>
-	Next
-</button>
+
+<style>
+.main-img {
+	max-width: 200px;;
+}
+</style>
