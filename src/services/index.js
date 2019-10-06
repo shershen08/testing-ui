@@ -13,7 +13,7 @@ let instance = axios.create({
   headers
 })
 
-export sendUserData = (data) => {
+export const sendUserData = (data) => {
     instance.post(`${APP_URL}/data`, data).then(_ => {
 
     })
